@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PvP_Base : MonoBehaviour
+public class XvX_Base : MonoBehaviour
 {
     public void Init(List<Button> cells, GameObject Cross, GameObject Circle, Transform canvas)
     {

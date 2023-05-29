@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public class PvP_4x4 : PvP_Base
+public class PvP_4x4 : XvX_Base
 {
     private List<List<int>> win = new List<List<int>>()
     {

@@ -22,6 +22,12 @@ public class TicTackToeManager : MonoBehaviour
                component.Init(cell, Cross, Circle, canvas);
                
             }
+
+            if (Settings.Gamestate == GameState.PvR)
+            {
+                PvE_3x3 component = gameObject.AddComponent<PvE_3x3>();
+                component.Init(cell, Cross, Circle, canvas);
+            }
         }
         
         if (Settings.size == 4)

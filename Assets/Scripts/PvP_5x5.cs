@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PvP_5x5 : PvP_Base
+public class PvP_5x5 : XvX_Base
 {
     private List<List<int>> win = new List<List<int>>()
     {
