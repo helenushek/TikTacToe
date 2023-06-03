@@ -29,14 +29,23 @@ public class TicTackToeManager : MonoBehaviour
                 component.Init(cell, Cross, Circle, canvas);
             }
         }
-        
+
         if (Settings.size == 4)
+        {
             if (Settings.Gamestate == GameState.PvP)
             {
                 PvP_4x4 component = gameObject.AddComponent<PvP_4x4>();
                 component.Init(cell, Cross, Circle, canvas);
             }
-        
+
+            if (Settings.Gamestate == GameState.PvR)
+            {
+                PvE_4x4 component = gameObject.AddComponent < PvE_4x4 > ();
+                component.Init(cell, Cross, Circle, canvas);
+            }
+        }
+
+
         if (Settings.size == 5)
             if (Settings.Gamestate == GameState.PvP)
             {

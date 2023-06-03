@@ -3,14 +3,27 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PvP_Base : MonoBehaviour
+public class PvE_Base : MonoBehaviour
 {
+    public List<Button> knopki;
+
+    public List<Turn> VseHody = new List<Turn>();
+
+    public GameObject Krestik;
+    public GameObject Nolik;
+    public Transform Canvas;
+    public FirstPlayer WhoisOn;
+    public bool PervyHod = true;
+    public List<List<int>> win;
+
     public void Init(List<Button> cells, GameObject Cross, GameObject Circle, Transform canvas)
     {
+        InitInternal();
         WhoisOn = FirstPlayer.Cross;
         Krestik = Cross;
         Nolik = Circle;
         Canvas = canvas;
+        knopki = cells;
 
         for (int k = 0; k < cells.Count; k++)
         {
@@ -26,45 +39,46 @@ public class PvP_Base : MonoBehaviour
             i++;
         }
     }
-    public void SetWin(List<List<int>> myWin)
+
+    protected virtual void InitInternal()
     {
-        win = myWin;
+        throw new System.NotImplementedException();
     }
-    public List<Turn> VseHody = new List<Turn>();
-
-    public GameObject Krestik;
-    public GameObject Nolik;
-    public Transform Canvas;
-    public FirstPlayer WhoisOn;
-    private List<List<int>> win;
-
+    protected virtual void PcTurn()
+    {
+        throw new System.NotImplementedException();
+    }
     public void OnClick(Transform button, int index)
     {
-        GameObject newFigure;
+        if (PlayerTurn(button, index)) return;
+        ChekWin();
 
-        if (WhoisOn == FirstPlayer.Cross && (VseHody[index] == Turn.None))
-        {
-            newFigure = Instantiate(Krestik);
-            VseHody[index] = Turn.Enemy;
-            WhoisOn = FirstPlayer.Circle;
-        }
-        else if (VseHody[index] == Turn.None)
-        {
-            newFigure = Instantiate(Nolik);
-            VseHody[index] = Turn.Player;
-            WhoisOn = FirstPlayer.Cross;
-        }
-        else return;
+        Invoke(nameof(PcTurn), 0.5f);
+    }
+
+    private bool PlayerTurn(Transform button, int index)
+    {
+        if (VseHody[index] != Turn.None) return true;
+
+        GameObject newFigure = Instantiate(Krestik);
+        VseHody[index] = Turn.Player;
+        WhoisOn = FirstPlayer.Circle;
+
 
         Transform newFugireTransform = newFigure.GetComponent<Transform>();
         newFugireTransform.position = button.position;
-        newFugireTransform.parent = Canvas;
-        ChekWin();
+        newFugireTransform.parent = button;
+        return false;
     }
-    
 
-    private void ChekWin()
+    protected int GetRandomIndex()
     {
+        return VseHody.FindIndex(x => x == Turn.None);
+    }
+
+    public void ChekWin()
+    {
+        Settings.Whoiswon = WhoisWon.Nobody;
         for (int i = 0; i < win.Count; i++)
         {
             List<int> podspisok = win[i];
@@ -77,8 +91,8 @@ public class PvP_Base : MonoBehaviour
                 if (WhoisOn == FirstPlayer.Circle)
                     Settings.Whoiswon = WhoisWon.X;
 
-                else 
-                    Settings.Whoiswon = WhoisWon.O; 
+                else
+                    Settings.Whoiswon = WhoisWon.O;
                 SceneManager.LoadScene("SomeoneWin");
             }
         }
@@ -93,6 +107,7 @@ public class PvP_Base : MonoBehaviour
                 {
                     Nichya = false;
                 }
+
                 index++;
             }
 

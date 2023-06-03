@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PvP_3x3 : XvX_Base
+public class PvP_3x3 : PvP_Base
 {
     private List<List<int>> win = new List<List<int>>()
     {
