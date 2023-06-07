@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class PvE_Base : MonoBehaviour
 {
@@ -15,6 +17,32 @@ public class PvE_Base : MonoBehaviour
     public FirstPlayer WhoisOn;
     public bool PervyHod = true;
     public List<List<int>> win;
+
+
+    protected int GetFreeIndex(List<Turn> turns, Turn turn)
+    {
+        for (int i = 0; i < turns.Count; i++)
+        {
+            bool isCorrect = true;
+            for (int j = 0; j < turns.Count; j++)
+                if (j != i)
+                {
+                    if (turns[j] != turn)
+                        isCorrect = false;
+                }
+                else
+                {
+                    if (turns[j] != Turn.None)
+                        isCorrect = false;
+                }
+
+            if (isCorrect == true)
+                return i;
+        }
+
+
+        return -1;
+    }
 
     public void Init(List<Button> cells, GameObject Cross, GameObject Circle, Transform canvas)
     {
@@ -44,10 +72,12 @@ public class PvE_Base : MonoBehaviour
     {
         throw new System.NotImplementedException();
     }
+
     protected virtual void PcTurn()
     {
         throw new System.NotImplementedException();
     }
+
     public void OnClick(Transform button, int index)
     {
         if (PlayerTurn(button, index)) return;
@@ -73,7 +103,20 @@ public class PvE_Base : MonoBehaviour
 
     protected int GetRandomIndex()
     {
-        return VseHody.FindIndex(x => x == Turn.None);
+        int count = 0;
+
+        int w = Random.Range(0, VseHody.Count);
+        while (VseHody[w] != Turn.None)
+        {
+            w = Random.Range(0, VseHody.Count);
+
+            if (count > 1000)
+                throw new Exception("Кол-во максимальных попыток превышено");
+
+            count++;
+        }
+
+        return w;
     }
 
     public void ChekWin()

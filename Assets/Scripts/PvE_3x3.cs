@@ -68,42 +68,31 @@ public class PvE_3x3 : PvE_Base
         PervyHod = false;
         ChekWin();
     }
-    
     private int GetIndex(Turn t)
     {
+        int v;
         for (int i = 0; i < 9; i += 3)
         {
-            if (VseHody[0 + i] == t && VseHody[1 + i] == t && VseHody[2 + i] == Turn.None)
-                return 2 + i;
-            if (VseHody[0 + i] == t && VseHody[1 + i] == Turn.None && VseHody[2 + i] == t)
-                return 1 + i;
-            if (VseHody[0 + i] == Turn.None && VseHody[1 + i] == t && VseHody[2 + i] == t)
-                return 0 + i;
+            v = GetFreeIndex(new List<Turn>() { VseHody[0 + i], VseHody[1 + i], VseHody[2 + i] }, t);
+            if (v != -1) 
+                return v + i;
         }
 
         for (int i = 0; i < 3; i++)
         {
-            if (VseHody[0 + i] == t && VseHody[3 + i] == t && VseHody[6 + i] == Turn.None)
-                return 6 + i;
-            if (VseHody[0 + i] == t && VseHody[3 + i] == Turn.None && VseHody[6 + i] == t)
-                return 3 + i;
-            if (VseHody[0 + i] == Turn.None && VseHody[3 + i] == t && VseHody[6 + i] == t)
-                return 0 + i;
+            v = GetFreeIndex(new List<Turn>() { VseHody[0 + i], VseHody[3 + i], VseHody[6 + i] }, t);
+            if (v != -1) 
+                return v * 3 + i;
+            
         }
+        
+        v = GetFreeIndex(new List<Turn>() { VseHody[0], VseHody[4], VseHody[8] }, t);
+        if (v != -1)
+            return v * 4;
 
-        if (VseHody[0] == t && VseHody[4] == t && VseHody[8] == Turn.None)
-            return 8;
-        if (VseHody[0] == t && VseHody[4] == Turn.None && VseHody[8] == t)
-            return 4;
-        if (VseHody[0] == Turn.None && VseHody[4] == t && VseHody[8] == t)
-            return 0;
-
-        if (VseHody[2] == t && VseHody[4] == t && VseHody[6] == Turn.None)
-            return 6;
-        if (VseHody[2] == t && VseHody[4] == Turn.None && VseHody[6] == t)
-            return 4;
-        if (VseHody[2] == Turn.None && VseHody[4] == t && VseHody[6] == t)
-            return 2;
+        v = GetFreeIndex(new List<Turn>() { VseHody[2], VseHody[4], VseHody[6] }, t);
+        if (v != -1)
+            return (v + 1) * 2;
 
         return -1;
     }

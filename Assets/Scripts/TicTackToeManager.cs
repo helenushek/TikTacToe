@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,11 +44,19 @@ public class TicTackToeManager : MonoBehaviour
 
 
         if (Settings.size == 5)
+        {
             if (Settings.Gamestate == GameState.PvP)
             {
                 PvP_5x5 component = gameObject.AddComponent<PvP_5x5>();
                 component.Init(cell, Cross, Circle, canvas);
             }
+
+            if (Settings.Gamestate == GameState.PvR)
+            {
+                PvE_5x5 component = gameObject.AddComponent<PvE_5x5>();
+                component.Init(cell, Cross, Circle, canvas);
+            }
+        }
     }
 
     

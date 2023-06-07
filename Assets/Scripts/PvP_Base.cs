@@ -26,10 +26,12 @@ public class PvP_Base : MonoBehaviour
             i++;
         }
     }
+
     public void SetWin(List<List<int>> myWin)
     {
         win = myWin;
     }
+
     public List<Turn> VseHody = new List<Turn>();
 
     public GameObject Krestik;
@@ -61,7 +63,7 @@ public class PvP_Base : MonoBehaviour
         newFugireTransform.parent = Canvas;
         ChekWin();
     }
-    
+
 
     private void ChekWin()
     {
@@ -77,8 +79,8 @@ public class PvP_Base : MonoBehaviour
                 if (WhoisOn == FirstPlayer.Circle)
                     Settings.Whoiswon = WhoisWon.X;
 
-                else 
-                    Settings.Whoiswon = WhoisWon.O; 
+                else
+                    Settings.Whoiswon = WhoisWon.O;
                 SceneManager.LoadScene("SomeoneWin");
             }
         }
@@ -93,6 +95,7 @@ public class PvP_Base : MonoBehaviour
                 {
                     Nichya = false;
                 }
+
                 index++;
             }
 
