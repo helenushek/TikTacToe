@@ -64,7 +64,7 @@ public class PvE_3x3 : PvE_Base
         newFugireTransform.position = knopki[index].transform.position;
         newFugireTransform.parent = Canvas;
         VseHody[index] = Turn.Enemy;
-        WhoisOn = FirstPlayer.Cross;
+        WhoisOn = WhoIsOn.Cross;
         PervyHod = false;
         ChekWin();
     }

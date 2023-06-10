@@ -27,7 +27,7 @@ public class PvP_3x3 : PvP_Base
     }
 }
 
-public enum FirstPlayer
+public enum WhoIsOn
 {
     Cross,
     Circle,

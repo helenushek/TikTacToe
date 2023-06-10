@@ -14,7 +14,7 @@ public class PvE_Base : MonoBehaviour
     public GameObject Krestik;
     public GameObject Nolik;
     public Transform Canvas;
-    public FirstPlayer WhoisOn;
+    public WhoIsOn WhoisOn;
     public bool PervyHod = true;
     public List<List<int>> win;
 
@@ -47,7 +47,7 @@ public class PvE_Base : MonoBehaviour
     public void Init(List<Button> cells, GameObject Cross, GameObject Circle, Transform canvas)
     {
         InitInternal();
-        WhoisOn = FirstPlayer.Cross;
+        WhoisOn = WhoIsOn.Cross;
         Krestik = Cross;
         Nolik = Circle;
         Canvas = canvas;
@@ -92,7 +92,7 @@ public class PvE_Base : MonoBehaviour
 
         GameObject newFigure = Instantiate(Krestik);
         VseHody[index] = Turn.Player;
-        WhoisOn = FirstPlayer.Circle;
+        WhoisOn = WhoIsOn.Circle;
 
 
         Transform newFugireTransform = newFigure.GetComponent<Transform>();
@@ -131,7 +131,7 @@ public class PvE_Base : MonoBehaviour
 
             if (result || result2)
             {
-                if (WhoisOn == FirstPlayer.Circle)
+                if (WhoisOn == WhoIsOn.Circle)
                     Settings.Whoiswon = WhoisWon.X;
 
                 else

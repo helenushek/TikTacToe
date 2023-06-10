@@ -55,7 +55,7 @@ public class PvE_4x4 : PvE_Base
         newFugireTransform.position = button.transform.position;
         newFugireTransform.parent = button.transform;
         VseHody[index] = Turn.Enemy;
-        WhoisOn = FirstPlayer.Cross;
+        WhoisOn = WhoIsOn.Cross;
         PervyHod = false;
         ChekWin();
     }

@@ -7,7 +7,7 @@ public class PvP_Base : MonoBehaviour
 {
     public void Init(List<Button> cells, GameObject Cross, GameObject Circle, Transform canvas)
     {
-        WhoisOn = FirstPlayer.Cross;
+        WhoisOn = WhoIsOn.Cross;
         Krestik = Cross;
         Nolik = Circle;
         Canvas = canvas;
@@ -37,24 +37,24 @@ public class PvP_Base : MonoBehaviour
     public GameObject Krestik;
     public GameObject Nolik;
     public Transform Canvas;
-    public FirstPlayer WhoisOn;
+    public WhoIsOn WhoisOn;
     private List<List<int>> win;
 
     public void OnClick(Transform button, int index)
     {
         GameObject newFigure;
 
-        if (WhoisOn == FirstPlayer.Cross && (VseHody[index] == Turn.None))
+        if (WhoisOn == WhoIsOn.Cross && (VseHody[index] == Turn.None))
         {
             newFigure = Instantiate(Krestik);
             VseHody[index] = Turn.Enemy;
-            WhoisOn = FirstPlayer.Circle;
+            WhoisOn = WhoIsOn.Circle;
         }
         else if (VseHody[index] == Turn.None)
         {
             newFigure = Instantiate(Nolik);
             VseHody[index] = Turn.Player;
-            WhoisOn = FirstPlayer.Cross;
+            WhoisOn = WhoIsOn.Cross;
         }
         else return;
 
@@ -76,7 +76,7 @@ public class PvP_Base : MonoBehaviour
 
             if (result || result2)
             {
-                if (WhoisOn == FirstPlayer.Circle)
+                if (WhoisOn == WhoIsOn.Circle)
                     Settings.Whoiswon = WhoisWon.X;
 
                 else
