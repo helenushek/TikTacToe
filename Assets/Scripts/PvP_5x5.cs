@@ -1,11 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
-public class PvP_5x5 : PvP_Base
+public class PvP5X5 : PvPBase
 {
-    private List<List<int>> win = new List<List<int>>()
+    private List<List<int>> _win = new List<List<int>>()
     {
         new List<int>() { 0, 1, 2, 3, 4 },
         new List<int>() { 5, 6, 7, 8, 9 },
@@ -24,6 +21,6 @@ public class PvP_5x5 : PvP_Base
     };
     private void Start()
     {
-        SetWin(win);
+        SetWin(_win);
     }
 }

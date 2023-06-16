@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PvE4X4 : PvEBase
+public class EvE4X4 : EvEBase
 {
+    protected override void InitInternal()
+    {
+        Win = _winInternal;
+    }
     private List<List<int>> _winInternal = new List<List<int>>()
     {
         new List<int>() { 0, 1, 2, 3 },
@@ -21,48 +24,52 @@ public class PvE4X4 : PvEBase
         new List<int>() { 3, 6, 9, 12 },
     };
 
-    protected override void InitInternal()
-    {
-        Win = _winInternal;
-    }
-    
+
     protected override void PcTurn()
     {
-        GameObject newFigure = Instantiate(nolik);
-        int index;
+        bool isNolik = whoisOn == WhoIsOn.Circle;
 
-        int value = GetIndex(Turn.Enemy); // крестики (мы - PC)
+        GameObject newFigure;
+        if (isNolik)
+            newFigure = Instantiate(nolik);
+        else
+            newFigure = Instantiate(krestik);
+
+
+        int index;
+        int value;
+        if (isNolik) value = GetIndex(Turn.Enemy);
+        else value = GetIndex(Turn.Player);
+
         if (value == -1)
         {
-            value = GetIndex(Turn.Player); // нолики (игрок)
-            if (value == -1)
-            {
-                value = GetRandomIndex();
-                index = value;
-            }
-            else
-            {
-                index = value;
-            }
+            if (!isNolik) value = GetIndex(Turn.Enemy);
+            else value = GetIndex(Turn.Player);
+
+            if (value == -1) value = GetRandomIndex();
+        }
+
+        index = value;
+
+        Transform newFugireTransform = newFigure.GetComponent<Transform>();
+        newFugireTransform.position = Knopki[index].transform.position;
+        newFugireTransform.parent = Knopki[index].transform;
+        if (isNolik)
+        {
+            vseHody[index] = Turn.Enemy;
+            whoisOn = WhoIsOn.Cross;
         }
         else
         {
-            index = value;
+            vseHody[index] = Turn.Player;
+            whoisOn = WhoIsOn.Circle;
         }
 
-        Transform newFugireTransform = newFigure.GetComponent<Transform>();
-        Button button = knopki[index];
-        newFugireTransform.position = button.transform.position;
-        // ReSharper disable once Unity.InefficientPropertyAccess
-        newFugireTransform.parent = button.transform;
-        vseHody[index] = Turn.Enemy;
-        whoisOn = WhoIsOn.Cross;
-        pervyHod = false;
-        ChekWin();
+        Invoke(nameof(ChekWin), 0.5f);
     }
 
     private int GetIndex(Turn t)
-    { 
+    {
         int v;
         for (int i = 0; i < 16; i += 4)
         {
@@ -77,17 +84,15 @@ public class PvE4X4 : PvEBase
             if (v != -1)
                 return v * 4 + i;
         }
-        
+
         v = GetFreeIndex(new List<Turn>() { vseHody[0], vseHody[5], vseHody[10], vseHody[15] }, t);
         if (v != -1)
             return v * 5;
-        
+
         v = GetFreeIndex(new List<Turn>() { vseHody[3], vseHody[6], vseHody[9], vseHody[12] }, t);
         if (v != -1)
             return (v + 1) * 3;
-        
-        return -1;
-    } 
 
-    
+        return -1;
+    }
 }

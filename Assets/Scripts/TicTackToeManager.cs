@@ -1,66 +1,78 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TicTackToeManager : MonoBehaviour
 {
     [SerializeField] private List<Button> cell;
-    [SerializeField] private GameObject Cross;
-    [SerializeField] private GameObject Circle;
-    [SerializeField] private Transform canvas;
+    [FormerlySerializedAs("Cross")] [SerializeField] private GameObject cross;
+    [FormerlySerializedAs("Circle")] [SerializeField] private GameObject circle;
+    
 
     private void Start()
     {
-        if (Settings.size == 3)
+        if (Settings.Size == 3)
         {
             if (Settings.Gamestate == GameState.PvP)
             {
-                PvP_3x3 component = gameObject.AddComponent<PvP_3x3>();
-               component.Init(cell, Cross, Circle, canvas);
+                PvP3X3 component = gameObject.AddComponent<PvP3X3>();
+               component.Init(cell, cross, circle);
                
             }
 
             if (Settings.Gamestate == GameState.PvR)
             {
-                PvE_3x3 component = gameObject.AddComponent<PvE_3x3>();
-                component.Init(cell, Cross, Circle, canvas);
+                PvE3X3 component = gameObject.AddComponent<PvE3X3>();
+                component.Init(cell, cross, circle);
             }
             if (Settings.Gamestate == GameState.RvR)
             {
-                EvE_3x3 component = gameObject.AddComponent<EvE_3x3>();
-                component.Init(cell, Cross, Circle, canvas);
+                EvE3X3 component = gameObject.AddComponent<EvE3X3>();
+                component.Init(cell, cross, circle);
             }
             
         }
 
-        if (Settings.size == 4)
+        if (Settings.Size == 4)
         {
             if (Settings.Gamestate == GameState.PvP)
             {
-                PvP_4x4 component = gameObject.AddComponent<PvP_4x4>();
-                component.Init(cell, Cross, Circle, canvas);
+                PvP4X4 component = gameObject.AddComponent<PvP4X4>();
+                component.Init(cell, cross, circle);
             }
 
             if (Settings.Gamestate == GameState.PvR)
             {
-                PvE_4x4 component = gameObject.AddComponent < PvE_4x4 > ();
-                component.Init(cell, Cross, Circle, canvas);
+                PvE4X4 component = gameObject.AddComponent < PvE4X4 > ();
+                component.Init(cell, cross, circle);
+            }
+            if (Settings.Gamestate == GameState.RvR)
+            {
+                EvE4X4 component = gameObject.AddComponent<EvE4X4>();
+                component.Init(cell, cross, circle);
             }
         }
 
 
-        if (Settings.size == 5)
+        if (Settings.Size == 5)
         {
             if (Settings.Gamestate == GameState.PvP)
             {
-                PvP_5x5 component = gameObject.AddComponent<PvP_5x5>();
-                component.Init(cell, Cross, Circle, canvas);
+                PvP5X5 component = gameObject.AddComponent<PvP5X5>();
+                component.Init(cell, cross, circle);
             }
 
             if (Settings.Gamestate == GameState.PvR)
             {
-                PvE_5x5 component = gameObject.AddComponent<PvE_5x5>();
-                component.Init(cell, Cross, Circle, canvas);
+                PvE5X5 component = gameObject.AddComponent<PvE5X5>();
+                component.Init(cell, cross, circle);
+            }
+            
+            if (Settings.Gamestate == GameState.RvR)
+            {
+                Eve5X5 component = gameObject.AddComponent<Eve5X5>();
+                component.Init(cell, cross, circle);
             }
         }
     }

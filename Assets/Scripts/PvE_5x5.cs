@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PvE_5x5 : PvE_Base
+public class PvE5X5 : PvEBase
 {
-    private List<List<int>> winInternal = new List<List<int>>()
+    private List<List<int>> _winInternal = new List<List<int>>()
     {
         new List<int>() { 0, 1, 2, 3, 4},
         new List<int>() { 5, 6, 7, 8, 9 },
@@ -25,12 +25,12 @@ public class PvE_5x5 : PvE_Base
 
     protected override void InitInternal()
     {
-        win = winInternal;
+        Win = _winInternal;
     }
 
     protected override void PcTurn()
     {
-        GameObject newFigure = Instantiate(Nolik);
+        GameObject newFigure = Instantiate(nolik);
         int index;
 
         int value = GetIndex(Turn.Enemy); // крестики (мы - PC)
@@ -55,10 +55,11 @@ public class PvE_5x5 : PvE_Base
         Transform newFugireTransform = newFigure.GetComponent<Transform>();
         Button button = knopki[index];
         newFugireTransform.position = button.transform.position;
+        // ReSharper disable once Unity.InefficientPropertyAccess
         newFugireTransform.parent = button.transform;
-        VseHody[index] = Turn.Enemy;
-        WhoisOn = WhoIsOn.Cross;
-        PervyHod = false;
+        vseHody[index] = Turn.Enemy;
+        whoisOn = WhoIsOn.Cross;
+        pervyHod = false;
         ChekWin();
     }
 
@@ -67,23 +68,23 @@ public class PvE_5x5 : PvE_Base
         int v;
         for (int i = 0; i < 25; i += 5)
         {
-            v = GetFreeIndex(new List<Turn>() { VseHody[0 + i], VseHody[1 + i], VseHody[2 + i], VseHody[3 + i], VseHody[4 + i] }, t);
+            v = GetFreeIndex(new List<Turn>() { vseHody[0 + i], vseHody[1 + i], vseHody[2 + i], vseHody[3 + i], vseHody[4 + i] }, t);
             if (v != -1)
                 return v + i;
         }
 
         for (int i = 0; i < 5; i++)
         {
-            v = GetFreeIndex(new List<Turn>() { VseHody[0 + i], VseHody[5 + i], VseHody[10 + i], VseHody[15 + i], VseHody[20 + i] }, t);
+            v = GetFreeIndex(new List<Turn>() { vseHody[0 + i], vseHody[5 + i], vseHody[10 + i], vseHody[15 + i], vseHody[20 + i] }, t);
             if (v != -1)
                 return v * 5 + i;
         }
 
-        v = GetFreeIndex(new List<Turn>() { VseHody[0], VseHody[6], VseHody[12], VseHody[18], VseHody[24] }, t);
+        v = GetFreeIndex(new List<Turn>() { vseHody[0], vseHody[6], vseHody[12], vseHody[18], vseHody[24] }, t);
         if (v != -1)
             return v * 6;
         
-        v = GetFreeIndex(new List<Turn>() { VseHody[4], VseHody[8], VseHody[12], VseHody[16], VseHody[20] }, t);
+        v = GetFreeIndex(new List<Turn>() { vseHody[4], vseHody[8], vseHody[12], vseHody[16], vseHody[20] }, t);
         if (v != -1)
             return (v + 1) * 4;
         

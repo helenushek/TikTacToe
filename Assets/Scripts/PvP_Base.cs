@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PvP_Base : MonoBehaviour
+public class PvPBase : Base
 {
-    public void Init(List<Button> cells, GameObject Cross, GameObject Circle, Transform canvas)
+    public void Init(List<Button> cells, GameObject cross, GameObject circle)
     {
-        WhoisOn = WhoIsOn.Cross;
-        Krestik = Cross;
-        Nolik = Circle;
-        Canvas = canvas;
+        whoisOn = WhoIsOn.Cross;
+        krestik = cross;
+        nolik = circle;
 
         for (int k = 0; k < cells.Count; k++)
         {
-            VseHody.Add(Turn.None);
+            vseHody.Add(Turn.None);
         }
 
         int i = 0;
@@ -29,93 +27,32 @@ public class PvP_Base : MonoBehaviour
 
     public void SetWin(List<List<int>> myWin)
     {
-        win = myWin;
+        Win = myWin;
     }
 
-    public List<Turn> VseHody = new List<Turn>();
-
-    public GameObject Krestik;
-    public GameObject Nolik;
-    public Transform Canvas;
-    public WhoIsOn WhoisOn;
-    private List<List<int>> win;
+    
 
     public void OnClick(Transform button, int index)
     {
         GameObject newFigure;
 
-        if (WhoisOn == WhoIsOn.Cross && (VseHody[index] == Turn.None))
+        if (whoisOn == WhoIsOn.Cross && (vseHody[index] == Turn.None))
         {
-            newFigure = Instantiate(Krestik);
-            VseHody[index] = Turn.Enemy;
-            WhoisOn = WhoIsOn.Circle;
+            newFigure = Instantiate(krestik);
+            vseHody[index] = Turn.Enemy;
+            whoisOn = WhoIsOn.Circle;
         }
-        else if (VseHody[index] == Turn.None)
+        else if (vseHody[index] == Turn.None)
         {
-            newFigure = Instantiate(Nolik);
-            VseHody[index] = Turn.Player;
-            WhoisOn = WhoIsOn.Cross;
+            newFigure = Instantiate(nolik);
+            vseHody[index] = Turn.Player;
+            whoisOn = WhoIsOn.Cross;
         }
         else return;
 
         Transform newFugireTransform = newFigure.GetComponent<Transform>();
         newFugireTransform.position = button.position;
-        newFugireTransform.parent = Canvas;
+        newFugireTransform.parent = button.transform;
         ChekWin();
-    }
-
-
-    private void ChekWin()
-    {
-        for (int i = 0; i < win.Count; i++)
-        {
-            List<int> podspisok = win[i];
-
-            bool result = ChekRow(Turn.Player, podspisok);
-            bool result2 = ChekRow(Turn.Enemy, podspisok);
-
-            if (result || result2)
-            {
-                if (WhoisOn == WhoIsOn.Circle)
-                    Settings.Whoiswon = WhoisWon.X;
-
-                else
-                    Settings.Whoiswon = WhoisWon.O;
-                SceneManager.LoadScene("SomeoneWin");
-            }
-        }
-
-        if (Settings.Whoiswon == WhoisWon.Nobody)
-        {
-            bool Nichya = true;
-            int index = 0;
-            while (index < VseHody.Count)
-            {
-                if (VseHody[index] == Turn.None)
-                {
-                    Nichya = false;
-                }
-
-                index++;
-            }
-
-            if (Nichya == true)
-            {
-                Settings.Whoiswon = WhoisWon.Nobody;
-                SceneManager.LoadScene("SomeoneWin");
-            }
-        }
-    }
-
-    private bool ChekRow(Turn hod, List<int> podspisok)
-    {
-        for (int j = 0; j < podspisok.Count; j++)
-        {
-            int index = podspisok[j];
-            if (VseHody[index] != hod)
-                return false;
-        }
-
-        return true;
     }
 }

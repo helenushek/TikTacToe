@@ -1,19 +1,20 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class MainScreen : MonoBehaviour
 {
 
-    [SerializeField] private TMP_Dropdown SizeMode;
+    [FormerlySerializedAs("SizeMode")] [SerializeField] private TMP_Dropdown sizeMode;
 
-    [SerializeField] private TMP_Dropdown GameMode2;
+    [FormerlySerializedAs("GameMode2")] [SerializeField] private TMP_Dropdown gameMode2;
     
     //делаем так, чтобы переменные по размеру поля и типу игры были видны в инспекторе 
     
     public void ToPlay()
     {
-        int value = GameMode2.value;
+        int value = gameMode2.value;
         if (value == 0)
         {
             Settings.Gamestate = GameState.PvP;
@@ -29,20 +30,20 @@ public class MainScreen : MonoBehaviour
         }
         
         
-        Settings.size = SizeMode.value;
-        if (SizeMode.value == 0)
+        Settings.Size = sizeMode.value;
+        if (sizeMode.value == 0)
         {
-            Settings.size = 3;
+            Settings.Size = 3;
             SceneManager.LoadScene("3x3");
         }
-        if (SizeMode.value == 1)
+        if (sizeMode.value == 1)
         {
-            Settings.size = 4;
+            Settings.Size = 4;
             SceneManager.LoadScene("4x4");
         }
-        if (SizeMode.value == 2)
+        if (sizeMode.value == 2)
         {
-            Settings.size = 5;
+            Settings.Size = 5;
             SceneManager.LoadScene("5x5");
         }
     }

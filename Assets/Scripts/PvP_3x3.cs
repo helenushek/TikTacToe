@@ -1,13 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using UnityEngine;
-using UnityEngine.UI;
 
-public class PvP_3x3 : PvP_Base
+public class PvP3X3 : PvPBase
 {
-    private List<List<int>> win = new List<List<int>>()
+    private List<List<int>> _win = new List<List<int>>()
     {
         new List<int>() { 0, 1, 2 },
         new List<int>() { 3, 4, 5 },
@@ -23,7 +18,7 @@ public class PvP_3x3 : PvP_Base
 
     private void Start()
     {
-        SetWin(win);
+        SetWin(_win);
     }
 }
 

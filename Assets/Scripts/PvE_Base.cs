@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class PvE_Base : MonoBehaviour
+public class PvEBase : Base
 {
+    public bool pervyHod = true;
     public List<Button> knopki;
-
-    public List<Turn> VseHody = new List<Turn>();
-
-    public GameObject Krestik;
-    public GameObject Nolik;
-    public Transform Canvas;
-    public WhoIsOn WhoisOn;
-    public bool PervyHod = true;
-    public List<List<int>> win;
 
 
     protected int GetFreeIndex(List<Turn> turns, Turn turn)
@@ -36,7 +27,7 @@ public class PvE_Base : MonoBehaviour
                         isCorrect = false;
                 }
 
-            if (isCorrect == true)
+            if (isCorrect)
                 return i;
         }
 
@@ -44,18 +35,17 @@ public class PvE_Base : MonoBehaviour
         return -1;
     }
 
-    public void Init(List<Button> cells, GameObject Cross, GameObject Circle, Transform canvas)
+    public void Init(List<Button> cells, GameObject cross, GameObject circle)
     {
         InitInternal();
-        WhoisOn = WhoIsOn.Cross;
-        Krestik = Cross;
-        Nolik = Circle;
-        Canvas = canvas;
+        whoisOn = WhoIsOn.Cross;
+        krestik = cross;
+        nolik = circle;
         knopki = cells;
 
         for (int k = 0; k < cells.Count; k++)
         {
-            VseHody.Add(Turn.None);
+            vseHody.Add(Turn.None);
         }
 
         int i = 0;
@@ -70,12 +60,12 @@ public class PvE_Base : MonoBehaviour
 
     protected virtual void InitInternal()
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     protected virtual void PcTurn()
     {
-        throw new System.NotImplementedException();
+        throw new NotImplementedException();
     }
 
     public void OnClick(Transform button, int index)
@@ -88,11 +78,11 @@ public class PvE_Base : MonoBehaviour
 
     private bool PlayerTurn(Transform button, int index)
     {
-        if (VseHody[index] != Turn.None) return true;
+        if (vseHody[index] != Turn.None) return true;
 
-        GameObject newFigure = Instantiate(Krestik);
-        VseHody[index] = Turn.Player;
-        WhoisOn = WhoIsOn.Circle;
+        GameObject newFigure = Instantiate(krestik);
+        vseHody[index] = Turn.Player;
+        whoisOn = WhoIsOn.Circle;
 
 
         Transform newFugireTransform = newFigure.GetComponent<Transform>();
@@ -105,10 +95,10 @@ public class PvE_Base : MonoBehaviour
     {
         int count = 0;
 
-        int w = Random.Range(0, VseHody.Count);
-        while (VseHody[w] != Turn.None)
+        int w = Random.Range(0, vseHody.Count);
+        while (vseHody[w] != Turn.None)
         {
-            w = Random.Range(0, VseHody.Count);
+            w = Random.Range(0, vseHody.Count);
 
             if (count > 1000)
                 throw new Exception("Кол-во максимальных попыток превышено");
@@ -119,58 +109,5 @@ public class PvE_Base : MonoBehaviour
         return w;
     }
 
-    public void ChekWin()
-    {
-        Settings.Whoiswon = WhoisWon.Nobody;
-        for (int i = 0; i < win.Count; i++)
-        {
-            List<int> podspisok = win[i];
-
-            bool result = ChekRow(Turn.Player, podspisok);
-            bool result2 = ChekRow(Turn.Enemy, podspisok);
-
-            if (result || result2)
-            {
-                if (WhoisOn == WhoIsOn.Circle)
-                    Settings.Whoiswon = WhoisWon.X;
-
-                else
-                    Settings.Whoiswon = WhoisWon.O;
-                SceneManager.LoadScene("SomeoneWin");
-            }
-        }
-
-        if (Settings.Whoiswon == WhoisWon.Nobody)
-        {
-            bool Nichya = true;
-            int index = 0;
-            while (index < VseHody.Count)
-            {
-                if (VseHody[index] == Turn.None)
-                {
-                    Nichya = false;
-                }
-
-                index++;
-            }
-
-            if (Nichya == true)
-            {
-                Settings.Whoiswon = WhoisWon.Nobody;
-                SceneManager.LoadScene("SomeoneWin");
-            }
-        }
-    }
-
-    private bool ChekRow(Turn hod, List<int> podspisok)
-    {
-        for (int j = 0; j < podspisok.Count; j++)
-        {
-            int index = podspisok[j];
-            if (VseHody[index] != hod)
-                return false;
-        }
-
-        return true;
-    }
+    
 }

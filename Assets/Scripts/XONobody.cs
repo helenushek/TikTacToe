@@ -1,30 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class XONobody : MonoBehaviour
+public class XoNobody : MonoBehaviour
 {
-    [SerializeField] private TMP_Text X;
-    [SerializeField] private TMP_Text O;
-    [SerializeField] private TMP_Text Nobody;
+    [FormerlySerializedAs("X")] [SerializeField] private TMP_Text x;
+    [FormerlySerializedAs("O")] [SerializeField] private TMP_Text o;
+    [FormerlySerializedAs("Nobody")] [SerializeField] private TMP_Text nobody;
     
     void Start()
     {
         
         if (Settings.Whoiswon == WhoisWon.X)
         {
-            X.gameObject.SetActive(true);
+            x.gameObject.SetActive(true);
         }
         
         if (Settings.Whoiswon == WhoisWon.O)
         {
-            O.gameObject.SetActive(true);
+            o.gameObject.SetActive(true);
         }
         
         if (Settings.Whoiswon == WhoisWon.Nobody)
         {
-            Nobody.gameObject.SetActive(true);
+            nobody.gameObject.SetActive(true);
         }
         
     }
