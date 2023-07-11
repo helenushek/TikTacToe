@@ -7,4 +7,9 @@ public class AllButton : MonoBehaviour
   {
     SceneManager.LoadScene("MainScreen");
   }
+
+  public void Exit()
+  {
+    Application.Quit();
+  }
 }

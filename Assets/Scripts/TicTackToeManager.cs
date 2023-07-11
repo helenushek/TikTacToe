@@ -1,35 +1,38 @@
 using System.Collections.Generic;
+using PvP;
+using PvR;
+using RvR;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TicTackToeManager : MonoBehaviour
 {
-    [SerializeField] private List<Button> cell;
+    [FormerlySerializedAs("cell")] [SerializeField] private List<Button> cells;
     [FormerlySerializedAs("Cross")] [SerializeField] private GameObject cross;
     [FormerlySerializedAs("Circle")] [SerializeField] private GameObject circle;
     
 
     private void Start()
     {
+        FindObjectOfType<Music>().StopMusic();
         if (Settings.Size == 3)
         {
             if (Settings.Gamestate == GameState.PvP)
             {
-                PvP3X3 component = gameObject.AddComponent<PvP3X3>();
-               component.Init(cell, cross, circle);
-               
+                PvP_3x3 component = gameObject.AddComponent<PvP_3x3>();
+                component.Init(cells, cross, circle);
             }
 
             if (Settings.Gamestate == GameState.PvR)
             {
-                PvE3X3 component = gameObject.AddComponent<PvE3X3>();
-                component.Init(cell, cross, circle);
+                PvR_3x3 component = gameObject.AddComponent<PvR_3x3>();
+                component.Init(cells, cross, circle);
             }
             if (Settings.Gamestate == GameState.RvR)
             {
-                EvE3X3 component = gameObject.AddComponent<EvE3X3>();
-                component.Init(cell, cross, circle);
+                RvR_3x3 component = gameObject.AddComponent<RvR_3x3>();
+                component.Init(cells, cross, circle);
             }
             
         }
@@ -38,19 +41,19 @@ public class TicTackToeManager : MonoBehaviour
         {
             if (Settings.Gamestate == GameState.PvP)
             {
-                PvP4X4 component = gameObject.AddComponent<PvP4X4>();
-                component.Init(cell, cross, circle);
+                PvP_4x4 component = gameObject.AddComponent<PvP_4x4>();
+                component.Init(cells, cross, circle);
             }
 
             if (Settings.Gamestate == GameState.PvR)
             {
-                PvE4X4 component = gameObject.AddComponent < PvE4X4 > ();
-                component.Init(cell, cross, circle);
+                PvR_4x4 component = gameObject.AddComponent < PvR_4x4 > ();
+                component.Init(cells, cross, circle);
             }
             if (Settings.Gamestate == GameState.RvR)
             {
-                EvE4X4 component = gameObject.AddComponent<EvE4X4>();
-                component.Init(cell, cross, circle);
+                RvR_4x4 component = gameObject.AddComponent<RvR_4x4>();
+                component.Init(cells, cross, circle);
             }
         }
 
@@ -59,20 +62,20 @@ public class TicTackToeManager : MonoBehaviour
         {
             if (Settings.Gamestate == GameState.PvP)
             {
-                PvP5X5 component = gameObject.AddComponent<PvP5X5>();
-                component.Init(cell, cross, circle);
+                PvP_5x5 component = gameObject.AddComponent<PvP_5x5>();
+                component.Init(cells, cross, circle);
             }
 
             if (Settings.Gamestate == GameState.PvR)
             {
-                PvE5X5 component = gameObject.AddComponent<PvE5X5>();
-                component.Init(cell, cross, circle);
+                PvR_5x5 component = gameObject.AddComponent<PvR_5x5>();
+                component.Init(cells, cross, circle);
             }
             
             if (Settings.Gamestate == GameState.RvR)
             {
-                Eve5X5 component = gameObject.AddComponent<Eve5X5>();
-                component.Init(cell, cross, circle);
+                RvR_5x5 component = gameObject.AddComponent<RvR_5x5>();
+                component.Init(cells, cross, circle);
             }
         }
     }

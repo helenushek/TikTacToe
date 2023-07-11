@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,8 +11,11 @@ public class MainScreen : MonoBehaviour
 
     [FormerlySerializedAs("GameMode2")] [SerializeField] private TMP_Dropdown gameMode2;
     
-    //делаем так, чтобы переменные по размеру поля и типу игры были видны в инспекторе 
-    
+    private void Start()
+    {
+        FindObjectOfType<Music>().ContinueMusic();
+    }
+
     public void ToPlay()
     {
         int value = gameMode2.value;

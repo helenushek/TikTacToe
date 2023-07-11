@@ -1,19 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
+
 
 public class Base : MonoBehaviour
 {
-    public List<List<int>> Win;
-    [FormerlySerializedAs("Krestik")] public GameObject krestik;
-    [FormerlySerializedAs("Nolik")] public GameObject nolik;
-    [FormerlySerializedAs("VseHody")] public List<Turn> vseHody = new List<Turn>();
-    [FormerlySerializedAs("WhoisOn")] public WhoIsOn whoisOn;
+    protected List<List<int>> Win;
+    protected GameObject krestik;
+    protected GameObject nolik;
+    protected List<Turn> vseHody = new List<Turn>();
+    protected WhoIsOn whoisOn;
 
     public void ChekWin()
     {
-        Settings.Whoiswon = WhoisWon.Nobody;
         for (int i = 0; i < Win.Count; i++)
         {
             List<int> podspisok = Win[i];
@@ -32,27 +31,26 @@ public class Base : MonoBehaviour
             }
         }
 
-        if (Settings.Whoiswon == WhoisWon.Nobody)
+
+        bool nichya = true;
+        int index = 0;
+        while (index < vseHody.Count)
         {
-            bool nichya = true;
-            int index = 0;
-            while (index < vseHody.Count)
+            if (vseHody[index] == Turn.None)
             {
-                if (vseHody[index] == Turn.None)
-                {
-                    nichya = false;
-                }
-
-                index++;
+                nichya = false;
             }
 
-            if (nichya)
-            {
-                Settings.Whoiswon = WhoisWon.Nobody;
-                SceneManager.LoadScene("SomeoneWin");
-            }
+            index++;
+        }
+
+        if (nichya)
+        {
+            Settings.Whoiswon = WhoisWon.Nobody;
+            SceneManager.LoadScene("SomeoneWin");
         }
     }
+    
     private bool ChekRow(Turn hod, List<int> podspisok)
     {
         for (int j = 0; j < podspisok.Count; j++)
@@ -61,8 +59,6 @@ public class Base : MonoBehaviour
             if (vseHody[index] != hod)
                 return false;
         }
-
         return true;
     }
 }
-

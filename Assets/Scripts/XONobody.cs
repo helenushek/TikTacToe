@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class XoNobody : MonoBehaviour
@@ -25,7 +26,14 @@ public class XoNobody : MonoBehaviour
         {
             nobody.gameObject.SetActive(true);
         }
-        
+
+        Invoke("Reload", 2f);
+
+    }
+
+    void Reload()
+    {
+        SceneManager.LoadScene("MainScreen");
     }
 
     
